@@ -24,7 +24,7 @@ async def query_posts(offset: int = 0, limit: int = 100, query_sort: list[tuple[
 
 
 @router.get("/count", response_model=int)
-async def count_number_of_documents(collection: AsyncIOMotorCollection = Depends(get_collection)):
+async def count_number_of_posts(collection: AsyncIOMotorCollection = Depends(get_collection)):
     return await count(collection)
 
 
