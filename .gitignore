@@ -1,3 +1,3 @@
-__pycache__/
 .idea
-test_main.http
+__pycache__/
+posts-service-volume/

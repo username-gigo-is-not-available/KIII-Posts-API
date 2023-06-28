@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  posts-service:
+    container_name: posts-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - posts-service-mongodb
+    env_file:
+      - .env
+    networks:
+      - posts-service-network
+
+  posts-service-mongodb:
+    container_name: posts-service-mongodb
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./posts-service-volume:/data/db
+    env_file:
+      - .env
+    networks:
+      - posts-service-network
+
+networks:
+  posts-service-network:
+    driver: bridge
+
+volumes:
+  posts-service-volume:
