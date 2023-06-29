@@ -3,8 +3,7 @@ from dotenv import *
 
 load_dotenv()
 
-environment_variables_list = ["CONNECTION_STRING_LOCAL", "CONNECTION_STRING_DOCKER",
-                              "DATABASE_NAME", "COLLECTION_NAME", "MAX_RETRY_ATTEMPTS", "RETRY_DELAY"]
+environment_variables_list = list(os.environ.keys())
 environment_variables_dict = {
     env_var: os.getenv(env_var) for env_var in environment_variables_list
 }

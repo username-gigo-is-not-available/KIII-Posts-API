@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: posts-service
+  labels:
+    name: posts-service

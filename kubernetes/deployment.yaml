@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-service-deployment
+  labels:
+    app: posts-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts-service
+  template:
+    metadata:
+      labels:
+        app: posts-service
+    spec:
+      containers:
+        - name: posts-service
+          image: gigo123/posts-service:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - name: ENVIRONMENT_VARIABLE_1
+              valueFrom:
+                configMapKeyRef:
+                  name: my-configmap
+                  key: key1
+            - name: ENVIRONMENT_VARIABLE_2
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: key2
+          volumeMounts:
+            - name: config-volume
+              mountPath: /path/to/config
+              readOnly: true
+            - name: secret-volume
+              mountPath: /path/to/secret
+              readOnly: true
+      volumes:
+        - name: config-volume
+          configMap:
+            name: my-configmap
+        - name: secret-volume
+          secret:
+            secretName: my-secret
