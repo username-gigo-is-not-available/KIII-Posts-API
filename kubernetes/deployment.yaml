@@ -11,6 +11,11 @@ spec:
   selector:
     matchLabels:
       app: posts-service
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
   template:
     metadata:
       labels:

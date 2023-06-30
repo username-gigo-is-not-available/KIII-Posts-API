@@ -5,6 +5,7 @@ metadata:
   name: posts-service-ingress
 spec:
   rules:
+    - host: localhost
       http:
         paths:
           - pathType: Prefix

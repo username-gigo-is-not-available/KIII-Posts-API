@@ -2,26 +2,29 @@ version: '3.8'
 
 services:
   posts-service:
-    container_name: posts-service
+    container_name: ${POSTS_SERVICE_CONTAINER_NAME}
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8000:80"
+      - "${POSTS_SERVICE_PORT_NUMBER}:80"
     depends_on:
-      - posts-service-mongodb
+      - ${MONGODB_CONTAINER_NAME}
     env_file:
       - .env
     networks:
       - posts-service-network
 
   posts-service-mongodb:
-    container_name: posts-service-mongodb
-    image: mongo:latest
+    container_name: ${MONGODB_CONTAINER_NAME}
+    image: mongo
     ports:
-      - "27017:27017"
+      - "${MONGODB_PORT_NUMBER}:27017"
     volumes:
       - ./posts-service-volume:/data/db
+    environment:
+      - TZ=UTC
+    user: mongodb
     env_file:
       - .env
     networks:
