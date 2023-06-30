@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: posts-service
+  name: posts-service-mongodb
+spec:
+  serviceName: posts-service
+  selector:
+    matchLabels:
+      db: posts-service-mongodb
+  template:
+    metadata:
+      labels:
+        db: posts-service-mongodb
+    spec:
+      containers:
+        - name: posts-service-mongodb
+          image: mongo:latest
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: posts-service-mongodb-volume
+              mountPath: /data/db
+          envFrom:
+            - configMapRef:
+                name: posts-service-mongodb-config
+          env:
+            - name: MONGODB_CONTAINER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: posts-service-mongodb-secret
+                  key: container_name
+            - name: MONGODB_PORT_NUMBER
+              valueFrom:
+                secretKeyRef:
+                  name: posts-service-mongodb-secret
+                  key: port_number
+            - name: MONGODB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: posts-service-mongodb-secret
+                  key: username
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: posts-service-mongodb-secret
+                  key: password
+      volumes:
+        - name: posts-service-mongodb-volume
+          persistentVolumeClaim:
+            claimName: posts-service-mongodb-pvc
+

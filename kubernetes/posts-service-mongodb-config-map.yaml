@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: posts-service-mongodb-config
+  namespace: posts-service
+data:
+  DATABASE_NAME: PostsDB
+  COLLECTION_NAME: Posts

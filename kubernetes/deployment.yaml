@@ -1,7 +1,9 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: posts-service-deployment
+  namespace: posts-service
   labels:
     app: posts-service
 spec:
@@ -20,27 +22,31 @@ spec:
           ports:
             - containerPort: 8000
           envFrom:
-            - name: ENVIRONMENT_VARIABLE_1
-              valueFrom:
-                configMapKeyRef:
-                  name: my-configmap
-                  key: key1
-            - name: ENVIRONMENT_VARIABLE_2
+            - configMapRef:
+                name: posts-service-config
+          env:
+            - name: MONGODB_CONTAINER_NAME
               valueFrom:
                 secretKeyRef:
-                  name: my-secret
-                  key: key2
-          volumeMounts:
-            - name: config-volume
-              mountPath: /path/to/config
-              readOnly: true
-            - name: secret-volume
-              mountPath: /path/to/secret
-              readOnly: true
-      volumes:
-        - name: config-volume
-          configMap:
-            name: my-configmap
-        - name: secret-volume
-          secret:
-            secretName: my-secret
+                  name: posts-service-secret
+                  key: mongodb_container_name
+            - name: MONGODB_PORT_NUMBER
+              valueFrom:
+                secretKeyRef:
+                  name: posts-service-secret
+                  key: mongodb_port_number
+            - name: MONGODB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: posts-service-secret
+                  key: mongodb_username
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: posts-service-secret
+                  key: mongodb_password
+
+
+
+
+
