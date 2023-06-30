@@ -26,16 +26,6 @@ spec:
             - configMapRef:
                 name: posts-service-mongodb-config
           env:
-            - name: MONGODB_CONTAINER_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: posts-service-mongodb-secret
-                  key: container_name
-            - name: MONGODB_PORT_NUMBER
-              valueFrom:
-                secretKeyRef:
-                  name: posts-service-mongodb-secret
-                  key: port_number
             - name: MONGODB_USER
               valueFrom:
                 secretKeyRef:

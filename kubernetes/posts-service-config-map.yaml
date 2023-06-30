@@ -5,8 +5,8 @@ metadata:
   name: posts-service-config
   namespace: posts-service
 data:
-  CONNECTION_STRING_AUTH: mongodb://MONGODB_USER:MONGODB_PASSWORD@MONGODB_CONTAINER_NAME:MONGODB_PORT_NUMBER
-  CONNECTION_STRING_NO_AUTH: mongodb://MONGODB_CONTAINER_NAME:MONGODB_PORT_NUMBER
+  CONNECTION_STRING_AUTH: mongodb://MONGODB_USER:MONGODB_PASSWORD@posts-service-mongodb.posts-service.svc.cluster.local:MONGODB_PORT_NUMBER
+  CONNECTION_STRING_NO_AUTH: mongodb://posts-service-mongodb.posts-service.svc.cluster.local:MONGODB_PORT_NUMBER
   DATABASE_NAME: PostsDB
   COLLECTION_NAME: Posts
   MAX_RETRY_ATTEMPTS: "10"
