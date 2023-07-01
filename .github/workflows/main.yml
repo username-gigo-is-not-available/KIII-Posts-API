@@ -24,11 +24,5 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/posts-service:latest
-      - name: Deploy to k3d cluster
-        uses: azure/kubectl@v1.2.0
-        with:
-          kubeconfig: ${{ secrets.KUBECONFIG }}
-          inlineScript: |
-            kubectl apply -f C:/Projects/KIII-Posts-API/kubernetes/deployment.yaml
-      
-         
+
+
