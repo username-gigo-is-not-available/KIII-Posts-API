@@ -7,3 +7,4 @@ metadata:
 data:
   DATABASE_NAME: PostsDB
   COLLECTION_NAME: Posts
+

@@ -26,16 +26,12 @@ spec:
             - configMapRef:
                 name: posts-service-mongodb-config
           env:
-            - name: MONGODB_USER
+            - name: CONNECTION_STRING
               valueFrom:
                 secretKeyRef:
                   name: posts-service-mongodb-secret
-                  key: username
-            - name: MONGODB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: posts-service-mongodb-secret
-                  key: password
+                  key: connection_string
+
       volumes:
         - name: posts-service-mongodb-volume
           persistentVolumeClaim:

@@ -25,21 +25,18 @@ spec:
         - name: posts-service
           image: gigo123/posts-service:latest
           ports:
-            - containerPort: 8000
+            - containerPort: 80
           envFrom:
             - configMapRef:
                 name: posts-service-config
           env:
-            - name: MONGODB_USER
+            - name: CONNECTION_STRING
               valueFrom:
                 secretKeyRef:
                   name: posts-service-secret
-                  key: mongodb_username
-            - name: MONGODB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: posts-service-secret
-                  key: mongodb_password
+                  key: connection_string
+
+
 
 
 

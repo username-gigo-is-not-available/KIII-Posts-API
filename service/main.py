@@ -11,7 +11,9 @@ app.include_router(posts_router)
 
 @app.on_event("startup")
 async def startup_event() -> Optional[AsyncIOMotorCollection]:
-    user_exists = await check_if_mongodb_user_exists()
-    if not user_exists:
-        await create_mongodb_user()
+    print("Application start up event starting ...")
+    # user_exists = await check_if_mongodb_user_exists()
+    # if not user_exists:
+    #     await create_mongodb_user()
     await get_collection()
+    print("Application start up event ending ...")

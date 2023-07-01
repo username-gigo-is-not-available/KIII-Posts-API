@@ -17,14 +17,13 @@ services:
 
   posts-service-mongodb:
     container_name: ${MONGODB_CONTAINER_NAME}
-    image: mongo
+    image: mongo:latest
     ports:
       - "${MONGODB_PORT_NUMBER}:27017"
-    volumes:
-      - ./posts-service-volume:/data/db
     environment:
       - TZ=UTC
-    user: mongodb
+    volumes:
+      - posts-service-volume:/data/db
     env_file:
       - .env
     networks:
