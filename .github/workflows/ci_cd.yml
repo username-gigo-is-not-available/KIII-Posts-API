@@ -1,4 +1,4 @@
-name: Docker Build and Push to Docker Hub
+name: CI/CD
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: ['master']
 
 jobs:
-  docker-build-and-push:
+  build-docker-image-and-push-to-dockerhub:
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -25,4 +25,18 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/posts-service:latest
 
-
+  deploy-to-kubernetes:
+    needs: build-docker-image-and-push-to-dockerhub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create kubeconfig
+        run: |
+          mkdir ${HOME}/.kube
+          echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
+          cat ${HOME}/.kube/config
+      - name: Use context
+        run: kubectl config use-context ${{ secrets.KUBE_CONTEXT }}
+      - name: Deploy to Kubernetes
+        run: kubectl apply -f kubernetes/
