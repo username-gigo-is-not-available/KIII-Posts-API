@@ -39,6 +39,6 @@ jobs:
       - name: Use context
         run: kubectl config use-context ${{ secrets.KUBE_CONTEXT }}
       - name: Deploy to Kubernetes
-        run: kubectl apply -f kubernetes/
+        run: kubectl apply -f kubernetes/ --insecure-skip-tls-verify
 
 
