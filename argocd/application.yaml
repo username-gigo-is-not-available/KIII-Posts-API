@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: posts-service-argocd-application
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/username-gigo-is-not-available/KIII-Posts-API.git
+    targetRevision: HEAD
+    path: kubernetes
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: posts-service
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
